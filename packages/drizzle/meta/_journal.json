@@ -8,6 +8,13 @@
       "when": 1758480667604,
       "tag": "0000_shiny_lionheart",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1758632170597,
+      "tag": "0001_pale_karma",
+      "breakpoints": true
     }
   ]
 }
