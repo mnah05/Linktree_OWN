@@ -3,21 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun run --watch ./apps/server/src/server.ts",
-    "db:generate": "bunx drizzle-kit generate",
-    "db:push": "bunx drizzle-kit push",
+    "dev": "ts-node-dev --respawn --transpile-only ./apps/server/src/server.ts",
+    "db:generate": "npx drizzle-kit generate",
+    "db:push": "npx drizzle-kit push",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/bun": "^1.2.22",
+    "@types/bcryptjs": "^3.0.0",
     "@types/cors": "^2.8.19",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.5.2",
     "@types/pg": "^8.15.5",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "drizzle-kit": "^0.31.4",
@@ -26,19 +25,21 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "prettier": "^3.6.2",
-    "tsx": "^4.20.5",
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.36.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "main": "index.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

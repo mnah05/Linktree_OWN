@@ -24,6 +24,13 @@ const routes = {
 // Using routes with API prefix for better organization
 app.use("/auth", routes.auth);
 
+// 404 handler for non-existent routes
+app.use((req: Request, res: Response, next: NextFunction) => {
+  return res
+    .status(404)
+    .json({ error: `Route ${req.method} ${req.originalUrl} not found` });
+});
+
 //global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error("Global Error Handler:", err.stack);
@@ -33,5 +40,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 //server listener
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port https://localhost:${PORT}/`);
 });

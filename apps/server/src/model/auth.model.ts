@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import db from "../../../../packages/db/db.ts";
 import { usersTable } from "../../../../packages/db/schema.ts";
 
-/*
+/**
  * Checks if an email address already exists in the users table
  * @param email - The email address to check (will be normalized to lowercase and trimmed)
  * @returns Promise<boolean> - true if email exists, false otherwise
@@ -19,7 +19,7 @@ export async function emailExists(email: string): Promise<boolean> {
   return row.length > 0;
 }
 
-/*
+/**
  * Checks if a username already exists in the users table
  * @param username - The username to check (will be normalized to lowercase and trimmed)
  * @returns Promise<boolean> - true if username exists, false otherwise
@@ -37,7 +37,7 @@ export async function userNameExists(username: string): Promise<boolean> {
   return row.length > 0;
 }
 
-/*
+/**
  * Creates a new user in the database
  * @param params - Object containing user data (username, name, email, password, salt)
  * @returns Promise<Array> - Array containing the inserted user's id and username
@@ -84,4 +84,31 @@ export async function createUser(params: {
     }
     throw err;
   }
+}
+
+/**
+ * Retrieves salt and hashed password from db
+ * @param params - Object containing user data (email)
+ */
+type UserSalt = {
+  userID: number;
+  userName: string;
+  salt: string;
+  password: string;
+} | null;
+
+export async function getSalt(params: { email: string }): Promise<UserSalt> {
+  const row = await db
+    .select({
+      userID: usersTable.id,
+      userName: usersTable.username,
+      salt: usersTable.salt,
+      password: usersTable.password,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.email, params.email))
+    .limit(1)
+    .then((rows) => rows[0] ?? null);
+
+  return row;
 }

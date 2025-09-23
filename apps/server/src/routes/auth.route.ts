@@ -3,6 +3,7 @@ import {
   checkEmailExists,
   checkUsernameExists,
   registerUser,
+  loginUser,
 } from "../controller/auth.controller.ts";
 
 const router = express.Router();
@@ -15,5 +16,8 @@ router.post("/check-email", checkEmailExists);
 
 // Check username availability
 router.post("/check-username", checkUsernameExists);
+
+// Login Routes
+router.post("/login", loginUser);
 
 export default router;
