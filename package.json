@@ -2,7 +2,11 @@
   "name": "my-app",
   "version": "1.0.0",
   "private": true,
-  "scripts": {},
+  "scripts": {
+	 "dev":"bun run ./apps/server/src/server.ts",
+	 "db:generate": "bunx drizzle-kit generate",
+	 "db:push":"bunx drizzle-kit push"
+  },
   "dependencies": {
     "@types/bun": "^1.2.22",
     "@types/cors": "^2.8.19",
