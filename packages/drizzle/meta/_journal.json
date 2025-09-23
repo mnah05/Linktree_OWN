@@ -15,6 +15,13 @@
       "when": 1758632170597,
       "tag": "0001_pale_karma",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758633901112,
+      "tag": "0002_mature_green_goblin",
+      "breakpoints": true
     }
   ]
 }

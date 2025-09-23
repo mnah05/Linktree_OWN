@@ -1,6 +1,6 @@
 {
-  "id": "9fc532ac-fd3d-421a-856e-165059840eb9",
-  "prevId": "f9e4a3ec-2127-4abd-be72-8c75db3788b8",
+  "id": "4d72f3b0-f829-463f-bb32-8039786d96ca",
+  "prevId": "9fc532ac-fd3d-421a-856e-165059840eb9",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -24,6 +24,12 @@
             "cache": "1",
             "cycle": false
           }
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
         },
         "name": {
           "name": "name",
@@ -54,6 +60,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "users_username_unique": {
+          "name": "users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": ["username"]
+        },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
