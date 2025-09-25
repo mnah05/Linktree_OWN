@@ -2,10 +2,12 @@
 import express from "express";
 import { type Request, type Response, type NextFunction } from "express";
 import authRoute from "./routes/auth.route.ts";
+import cors from "cors";
 
 const app = express();
 
 //middlewares setup
+app.use(cors());
 app.use(express.json());
 
 //testing route

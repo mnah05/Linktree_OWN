@@ -101,7 +101,7 @@ export async function registerUser(req: Request, res: Response) {
         username: newUser[0].username,
         email,
       },
-      jwtSecret
+      jwtSecret,
     );
 
     // Check if the user was successfully registered
@@ -171,10 +171,8 @@ export async function loginUser(req: Request, res: Response) {
     // bcrypt hashes start with $2a$ or $2b$ or $2y$
     const isBcrypt =
       typeof storedHash === "string" && /^\$2[aby]\$/.test(storedHash);
-    console.debug("login debug:", { email, isBcrypt }); // remove in prod
 
     if (!isBcrypt) {
-      console.error("Stored password is not a bcrypt hash for:", email);
       return res.status(500).json({ error: "Corrupt credentials" });
     }
 
@@ -194,7 +192,7 @@ export async function loginUser(req: Request, res: Response) {
     const jwtSecret = process.env.JWT_SECRET!;
     const token = jwt.sign(
       { userId: userID, username: userName, email },
-      jwtSecret
+      jwtSecret,
     );
 
     return res.status(200).json({

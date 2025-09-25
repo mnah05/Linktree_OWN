@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",
     "rootDir": "./src",
     "module": "esnext", // or "ESNext" if you want ESM
     "target": "ES2020",
@@ -10,7 +9,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

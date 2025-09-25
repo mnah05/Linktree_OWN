@@ -17,6 +17,7 @@
     "@types/node": "^24.5.2",
     "@types/pg": "^8.15.5",
     "@types/tailwindcss": "^3.0.11",
+    "axios": "^1.12.2",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
