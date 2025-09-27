@@ -1,4 +1,4 @@
-import { integer, pgTable, varchar, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, text, jsonb } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -7,4 +7,13 @@ export const usersTable = pgTable("users", {
   email: varchar({ length: 255 }).notNull().unique(),
   password: text().notNull(),
   salt: text().notNull(),
+});
+// profiles table
+export const profilesTable = pgTable("profiles", {
+  // username is both PK and FK referencing users.username
+  username: varchar({ length: 50 })
+    .primaryKey()
+    .references(() => usersTable.username, { onDelete: "cascade" }),
+  bio: text().default(""), // optional user bio
+  links: jsonb().$type<{ text: string; url: string }[]>().default([]), // JSON array of links
 });

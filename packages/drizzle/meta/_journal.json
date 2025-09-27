@@ -22,6 +22,13 @@
       "when": 1758633901112,
       "tag": "0002_mature_green_goblin",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759014798517,
+      "tag": "0003_old_blacklash",
+      "breakpoints": true
     }
   ]
 }
