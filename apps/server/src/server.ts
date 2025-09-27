@@ -1,45 +1,46 @@
-import express from "express";
-import { type Request, type Response, type NextFunction } from "express";
-import authRoute from "./routes/auth.route.ts";
+import express, {
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
 import cors from "cors";
+import path from "path";
+import authRoute from "./routes/auth.route.ts";
+
 const app = express();
 
-// middlewares setup
+// --- Middlewares ---
 app.use(cors());
 app.use(express.json());
-
-// Basic root route for testing
-app.get("/", (req: Request, res: Response) => {
-  console.log("req received");
-
-  // If ?msg=hello is provided, return it; otherwise return default
-  const message = typeof req.query.msg === "string" ? req.query.msg : "ok";
-
-  return res.status(200).json({ status: message });
-});
-
-const routes = {
-  auth: authRoute,
-  // Add more routes here as your app grows
-  // user: userRoute,
-  // posts: postRoute,
-};
-
-// Using routes with API prefix for better organization
-app.use("/auth", routes.auth);
-
 app.use((req: Request, res: Response, next: NextFunction) => {
-  return res
-    .status(404)
-    .json({ error: `Route ${req.method} ${req.originalUrl} not found` });
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
 });
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+// --- Serve static files from client/public ---
+app.use(express.static(path.resolve(__dirname, "../../client/public")));
+
+// --- Default route ---
+app.get("/", (_req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "../../client/index.html"));
+});
+
+// --- Other routes ---
+app.use("/auth", authRoute);
+
+// --- 404 handler ---
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+// --- Error handler ---
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error("Global Error Handler:", err.stack ?? err);
-  return res.status(500).json({ error: "Something went wrong on the server" });
+  res.status(500).json({ error: "Something went wrong" });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}/`);
-});
+// --- Start server ---
+const PORT = process.env.PORT || 5500;
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}/`)
+);

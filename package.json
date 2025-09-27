@@ -21,7 +21,7 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.31.5",
     "drizzle-orm": "^0.44.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
@@ -32,8 +32,6 @@
   "devDependencies": {
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2",
     "@types/bun": "latest"
   },

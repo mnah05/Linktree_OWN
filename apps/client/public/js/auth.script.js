@@ -39,7 +39,7 @@ loginForm.addEventListener("submit", function (e) {
   const pass = document.getElementById("loginPassword").value;
 
   axios
-    .post("http://localhost:3000/auth/login", { email, password: pass })
+    .post("http://localhost:5500/auth/login", { email, password: pass })
     .then((res) => {
       console.log("Login successful:", res.data);
 
@@ -65,7 +65,7 @@ signupForm.addEventListener("submit", function (e) {
   const password = document.getElementById("signupPassword").value;
 
   axios
-    .post("http://localhost:3000/auth/signup", {
+    .post("http://localhost:5500/auth/signup", {
       name,
       username,
       email,
@@ -91,9 +91,9 @@ signupForm.addEventListener("submit", function (e) {
 // Optional: interactive focus feedback on inputs
 document.querySelectorAll("input").forEach((input) => {
   input.addEventListener("focus", () =>
-    input.parentElement.classList.add("transform", "scale-105"),
+    input.parentElement.classList.add("transform", "scale-105")
   );
   input.addEventListener("blur", () =>
-    input.parentElement.classList.remove("transform", "scale-105"),
+    input.parentElement.classList.remove("transform", "scale-105")
   );
 });
