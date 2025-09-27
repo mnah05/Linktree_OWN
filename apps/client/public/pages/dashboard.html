@@ -1,51 +1,109 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>User Profile Card</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Profile Loader</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="flex justify-center items-center min-h-screen bg-neutral-900 text-white">
-    <!-- Loader -->
-    <div id="loader" class="flex flex-col items-center justify-center">
-      <div class="w-8 h-8 border-2 border-neutral-600 border-t-white rounded-full animate-spin"></div>
-      <p class="mt-4 text-neutral-400 text-sm">Loading...</p>
-    </div>
-
-    <!-- Profile Card -->
-    <div
-      id="profile-card"
-      class="hidden bg-neutral-800 border border-neutral-700 p-8 rounded-xl shadow-2xl w-96 text-center animate-fadeIn"
-    >
-      <h2 id="username" class="text-2xl font-medium text-white mb-4">
-        @username
-      </h2>
-      
-      <p id="bio" class="text-neutral-400 text-sm leading-relaxed mb-6">
-        User bio goes here...
-      </p>
-      
-      <div id="links" class="flex flex-col gap-2"></div>
-    </div>
-
-    <!-- External JavaScript -->
-    <script src="./../js/dashboard.js"></script>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(180deg, #07090b 0%, #0b0f12 100%);
+      }
+
+      /* Spinner */
+      .loader {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.06);
+        border-top-color: #34d399;
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Fade-in animation */
+      .fade-in {
+        animation: fadeIn 0.36s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+      }
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(5px);
+          transform: translateY(6px);
         }
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
-      
-      .animate-fadeIn {
-        animation: fadeIn 0.15s ease-out;
-      }
     </style>
+  </head>
+
+  <body class="min-h-screen flex items-center justify-center p-6 text-gray-100">
+    <div class="w-full max-w-md mx-auto">
+      <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold">Profile Finder</h1>
+        <p class="text-sm text-gray-400 mt-2">
+          Type a username and hit <span class="font-medium">Load Profile</span>.
+        </p>
+      </header>
+
+      <!-- Input + Button -->
+      <div class="flex gap-3 mb-6">
+        <input
+          id="username-input"
+          type="text"
+          placeholder="e.g., jane_doe"
+          class="w-full px-4 py-2 bg-[#071014] border border-gray-800 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none transition"
+        />
+        <button
+          id="load-btn"
+          class="px-5 py-2 rounded-lg bg-gradient-to-b from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-semibold transition"
+        >
+          Load
+        </button>
+      </div>
+
+      <!-- Loader -->
+      <div id="loader" class="hidden flex justify-center items-center mb-6">
+        <div class="loader" aria-hidden="true"></div>
+      </div>
+
+      <!-- Profile Card -->
+      <div
+        id="profile-card"
+        class="hidden bg-[#0b1216]/80 border border-gray-800 rounded-2xl p-5 md:p-7 shadow-xl backdrop-blur-sm fade-in"
+      >
+        <div class="mb-4">
+          <h2 id="username" class="text-xl font-semibold truncate"></h2>
+          <p id="handle" class="text-sm text-gray-400 truncate"></p>
+        </div>
+
+        <p id="bio" class="text-sm text-gray-300 mb-4 min-h-[3rem]"></p>
+
+        <div id="links" class="flex flex-col gap-3">
+          <!-- dashboard.js will inject profile links here -->
+        </div>
+      </div>
+
+      <!-- Message Box -->
+      <div
+        id="message-box"
+        class="hidden fixed top-5 right-5 bg-red-600 text-white py-2 px-4 rounded-lg shadow-lg"
+      ></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./../js/dashboard.js"></script>
   </body>
 </html>

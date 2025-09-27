@@ -1,25 +1,25 @@
-// Example user data (could come from API later)
-const userData = {
-  username: "@hasan",
-  bio: "Engineering student who loves coding, coffee, and new ideas 🚀",
-  links: [
-    { text: "GitHub", url: "https://github.com/" },
-    { text: "LinkedIn", url: "https://linkedin.com/" },
-    { text: "Portfolio", url: "https://example.com" },
-  ],
-};
+document.getElementById("load-btn").addEventListener("click", async () => {
+  const usernameInput = document.getElementById("username-input").value.trim();
+  if (!usernameInput) return alert("Please enter a username");
 
-document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
   const card = document.getElementById("profile-card");
+  const linksContainer = document.getElementById("links");
 
-  // Simulate data loading (replace with fetch() later)
-  setTimeout(() => {
-    // Fill data
+  // Show loader & hide previous card
+  loader.classList.remove("hidden");
+  card.classList.add("hidden");
+  linksContainer.innerHTML = "";
+
+  try {
+    const response = await axios.get(
+      `http://localhost:5500/username/${usernameInput}`
+    );
+    const userData = response.data;
+
+    // Fill card
     document.getElementById("username").innerText = userData.username;
     document.getElementById("bio").innerText = userData.bio;
-
-    const linksContainer = document.getElementById("links");
     userData.links.forEach((link) => {
       const a = document.createElement("a");
       a.href = link.url;
@@ -30,8 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
       linksContainer.appendChild(a);
     });
 
-    // Hide loader & show card
     loader.classList.add("hidden");
     card.classList.remove("hidden");
-  }, 500); // fake loading delay
+  } catch (err) {
+    console.error(err);
+    loader.classList.add("hidden");
+    alert("Profile not found or failed to load.");
+  }
 });

@@ -6,6 +6,7 @@ import express, {
 import cors from "cors";
 import path from "path";
 import authRoute from "./routes/auth.route.ts";
+import profileRoute from "./routes/profile.route.ts";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get("/", (_req: Request, res: Response) => {
 
 // --- Other routes ---
 app.use("/auth", authRoute);
+app.use("/username", profileRoute);
 
 // --- 404 handler ---
 app.use((_req: Request, res: Response) => {
