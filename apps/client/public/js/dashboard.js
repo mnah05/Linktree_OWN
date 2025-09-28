@@ -13,7 +13,7 @@ document.getElementById("load-btn").addEventListener("click", async () => {
 
   try {
     const response = await axios.get(
-      `http://localhost:5500/username/${usernameInput}`
+      `http://localhost:5500/username/${usernameInput}`,
     );
     const userData = response.data;
 

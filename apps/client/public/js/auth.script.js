@@ -91,9 +91,9 @@ signupForm.addEventListener("submit", function (e) {
 // Optional: interactive focus feedback on inputs
 document.querySelectorAll("input").forEach((input) => {
   input.addEventListener("focus", () =>
-    input.parentElement.classList.add("transform", "scale-105")
+    input.parentElement.classList.add("transform", "scale-105"),
   );
   input.addEventListener("blur", () =>
-    input.parentElement.classList.remove("transform", "scale-105")
+    input.parentElement.classList.remove("transform", "scale-105"),
   );
 });
