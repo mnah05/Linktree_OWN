@@ -33,7 +33,7 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
-    "@types/bun": "latest"
+    "@types/bun": "^1.2.23"
   },
   "workspaces": [
     "apps/*",
