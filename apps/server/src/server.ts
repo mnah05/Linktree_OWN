@@ -28,7 +28,7 @@ app.get("/", (_req: Request, res: Response) => {
 
 // --- Other routes ---
 app.use("/auth", authRoute);
-app.use("/username", profileRoute);
+app.use("/u", profileRoute);
 
 // --- 404 handler ---
 app.use((_req: Request, res: Response) => {
@@ -44,5 +44,5 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 // --- Start server ---
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}/`),
+  console.log(`Server running on http://localhost:${PORT}/`)
 );
