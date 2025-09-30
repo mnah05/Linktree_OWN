@@ -32,7 +32,7 @@ export function verifyJWT(
   if (token.toLowerCase().startsWith("bearer ")) {
     token = token.slice(7).trim();
   }
-  
+
   if (!token || token === "null" || token === "undefined") {
     res.status(401).json({ error: "No token provided or invalid format" });
     return;
