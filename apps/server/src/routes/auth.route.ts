@@ -9,6 +9,7 @@ import {
   registerUser,
   loginUser,
 } from "../controller/auth.controller.ts";
+import { verifyJWT } from "../middleware/jwtVerify.middleware.ts";
 
 const router = express.Router();
 
@@ -39,5 +40,8 @@ router.post("/check-username/:username", checkUsernameExists);
 
 // Login Routes
 router.post("/login", loginUser);
+
+//auth verify
+router.get("/verify", verifyJWT);
 
 export default router;

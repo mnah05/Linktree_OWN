@@ -36,7 +36,7 @@ export async function profileDetails(username: string) {
 export async function saveProfileInfo(
   username: string,
   bio?: string,
-  links?: any
+  links?: any,
 ) {
   try {
     // Check if profile exists
