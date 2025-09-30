@@ -45,7 +45,7 @@ form.addEventListener("submit", async (e) => {
   try {
     // Send to API
     const response = await axios.post(
-      "http://localhost:5500/admin/api/create",
+      "http://localhost:5500/admin/save",
       profileData,
     );
 
