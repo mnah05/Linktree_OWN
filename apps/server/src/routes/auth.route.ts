@@ -35,7 +35,7 @@ router.post("/signup", registerUser);
 router.post("/check-email", checkEmailExists);
 
 // Check username availability
-router.post("/check-username", checkUsernameExists);
+router.post("/check-username/:username", checkUsernameExists);
 
 // Login Routes
 router.post("/login", loginUser);

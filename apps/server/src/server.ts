@@ -7,6 +7,7 @@ import cors from "cors";
 import path from "path";
 import authRoute from "./routes/auth.route.ts";
 import profileRoute from "./routes/profile.route.ts";
+import adminRoutes from "./routes/admin.route.ts";
 
 const app = express();
 
@@ -41,7 +42,7 @@ app.get("/", (_req: Request, res: Response) => {
 // API routes
 app.use("/auth", authRoute);
 app.use("/u", profileRoute);
-
+app.use("/admin", adminRoutes);
 // Explicit 404 route
 app.get("/404", (_req: Request, res: Response) => {
   res.sendFile(path.join(publicPath, "pages/error.404.html"), (err?: Error) => {

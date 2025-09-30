@@ -26,16 +26,12 @@ export async function checkEmailExists(req: Request, res: Response) {
 }
 
 export async function checkUsernameExists(req: Request, res: Response) {
-  try {
-    const { username } = req.body;
-    if (!username)
-      return res.status(400).json({ error: "Username is required" });
+  const { username } = req.params;
 
-    const exists = await userNameExists(username);
-    return res.status(200).json({ exists: Boolean(exists) });
-  } catch {
-    return res.status(500).json({ error: "Internal server error" });
-  }
+  if (!username) return res.status(400).json({ error: "Username required" });
+
+  const exists = await userNameExists(username); // returns true/false
+  return res.status(200).json({ exists });
 }
 
 export async function registerUser(req: Request, res: Response) {
