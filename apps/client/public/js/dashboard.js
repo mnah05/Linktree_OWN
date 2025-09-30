@@ -17,7 +17,7 @@ async function loadProfile() {
 
   if (!username) {
     console.error("No username found in URL");
-    window.location.href = "/404";
+    window.location.href = "http://localhost:5500/404";
     return;
   }
 
@@ -35,7 +35,7 @@ async function loadProfile() {
     const userData = response.data;
     console.log("Profile data received:", userData);
 
-    // Set username with @
+    // Set username
     document.getElementById("username").innerText =
       "" + (userData.username || "unknown");
 
@@ -63,17 +63,22 @@ async function loadProfile() {
     if (card) card.classList.remove("hidden");
   } catch (err) {
     console.error("Error loading profile:", err);
-    console.error("Error details:", err.response || err.message);
-    // Don't redirect, show error instead
-    if (loader) loader.classList.add("hidden");
-    document.body.innerHTML = `
-            <div class="flex items-center justify-center min-h-screen">
-              <div class="text-center text-gray-400">
-                <h2 class="text-xl font-semibold mb-2">Profile not found</h2>
-                <p class="text-sm">Unable to load profile for "${username}"</p>
-              </div>
-            </div>
-          `;
+    const status = err.response?.status;
+    if (status === 404) {
+      // Redirect to 404 page if user not found
+      window.location.href = "http://localhost:5500/404";
+    } else {
+      // For other errors, show inline error
+      if (loader) loader.classList.add("hidden");
+      document.body.innerHTML = `
+        <div class="flex items-center justify-center min-h-screen">
+          <div class="text-center text-gray-400">
+            <h2 class="text-xl font-semibold mb-2">Profile not found</h2>
+            <p class="text-sm">Unable to load profile for "${username}"</p>
+          </div>
+        </div>
+      `;
+    }
   }
 }
 
