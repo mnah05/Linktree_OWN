@@ -13,7 +13,7 @@ const app = express();
 // --- Middlewares ---
 app.use(cors());
 app.use(express.json());
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, _res: Response, next: NextFunction) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
 });
@@ -30,12 +30,30 @@ app.get("/", (_req: Request, res: Response) => {
 app.use("/auth", authRoute);
 app.use("/u", profileRoute);
 
-// --- 404 handler ---
-app.use((_req: Request, res: Response) => {
-  res.status(404).json({ error: "Route not found" });
+// --- Custom 404 page ---
+const clientPages = path.resolve(process.cwd(), "apps/client/public/pages");
+app.get("/404", (_req: Request, res: Response) => {
+  res.sendFile(path.join(clientPages, "error.404.html"), (err?: Error) => {
+    if (err) {
+      console.error("Error serving 404 page:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 });
 
-// --- Error handler ---
+// --- Catch-all 404 handler for unmatched routes ---
+app.use((_req: Request, res: Response) => {
+  res
+    .status(404)
+    .sendFile(path.join(clientPages, "error.404.html"), (err?: Error) => {
+      if (err) {
+        console.error("Error serving 404 page:", err);
+        res.status(404).json({ error: "Route not found" });
+      }
+    });
+});
+
+// --- Global error handler ---
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error("Global Error Handler:", err.stack ?? err);
   res.status(500).json({ error: "Something went wrong" });
@@ -43,6 +61,6 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 // --- Start server ---
 const PORT = process.env.PORT || 5500;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}/`)
-);
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}/`);
+});
