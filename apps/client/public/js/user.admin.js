@@ -5,7 +5,8 @@ const previewBtn = document.getElementById("previewBtn");
 
 // Load username from JWT token on page load
 function loadUserFromToken() {
-  const token = sessionStorage.getItem("jwtToken");
+  // Check both sessionStorage (login) and localStorage (signup)
+  const token = sessionStorage.getItem("jwtToken") || localStorage.getItem("jwtToken");
   
   if (!token) {
     // Redirect to auth if no token
@@ -44,8 +45,8 @@ form.addEventListener("submit", async (e) => {
   successMessage.classList.add("hidden");
   errorMessage.classList.add("hidden");
 
-  // Get JWT token
-  const token = sessionStorage.getItem("jwtToken");
+  // Get JWT token from both sessionStorage (login) and localStorage (signup)
+  const token = sessionStorage.getItem("jwtToken") || localStorage.getItem("jwtToken");
   
   if (!token) {
     errorMessage.textContent = "Please log in to save your profile";
