@@ -3,6 +3,39 @@ const successMessage = document.getElementById("successMessage");
 const errorMessage = document.getElementById("errorMessage");
 const previewBtn = document.getElementById("previewBtn");
 
+// Load username from JWT token on page load
+function loadUserFromToken() {
+  const token = sessionStorage.getItem("jwtToken");
+  
+  if (!token) {
+    // Redirect to auth if no token
+    window.location.href = "http://localhost:5500/auth/";
+    return null;
+  }
+
+  try {
+    // Decode JWT token (simple base64 decode of payload)
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const username = payload.username;
+    
+    // Set username in the form
+    const usernameField = document.getElementById("username");
+    if (usernameField && username) {
+      usernameField.value = username;
+      usernameField.readOnly = true; // Make it readonly since it comes from JWT
+    }
+    
+    return username;
+  } catch (err) {
+    console.error("Error decoding token:", err);
+    window.location.href = "http://localhost:5500/auth/";
+    return null;
+  }
+}
+
+// Load user on page load
+const currentUsername = loadUserFromToken();
+
 // Handle form submission
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -11,8 +44,19 @@ form.addEventListener("submit", async (e) => {
   successMessage.classList.add("hidden");
   errorMessage.classList.add("hidden");
 
-  // Get form data
-  const username = document.getElementById("username").value.trim();
+  // Get JWT token
+  const token = sessionStorage.getItem("jwtToken");
+  
+  if (!token) {
+    errorMessage.textContent = "Please log in to save your profile";
+    errorMessage.classList.remove("hidden");
+    setTimeout(() => {
+      window.location.href = "http://localhost:5500/auth/";
+    }, 2000);
+    return;
+  }
+
+  // Get form data (username comes from JWT, not form)
   const bio = document.getElementById("bio").value.trim();
 
   // Collect links (only non-empty ones)
@@ -26,16 +70,8 @@ form.addEventListener("submit", async (e) => {
     }
   }
 
-  // Validate
-  if (!username) {
-    errorMessage.textContent = "Username is required";
-    errorMessage.classList.remove("hidden");
-    return;
-  }
-
-  // Prepare data
+  // Prepare data (no username - it's extracted from JWT on backend)
   const profileData = {
-    username,
     bio,
     links,
   };
@@ -43,10 +79,15 @@ form.addEventListener("submit", async (e) => {
   console.log("Submitting profile data:", profileData);
 
   try {
-    // Send to API
+    // Send to API with Authorization header
     const response = await axios.post(
-      "http://localhost:5500/admin/api/create",
+      "http://localhost:5500/admin/save",
       profileData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     console.log("Response:", response.data);
@@ -59,6 +100,7 @@ form.addEventListener("submit", async (e) => {
   } catch (err) {
     console.error("Error:", err);
     errorMessage.textContent =
+      err.response?.data?.error ||
       err.response?.data?.message ||
       "Failed to save profile. Please try again.";
     errorMessage.classList.remove("hidden");
