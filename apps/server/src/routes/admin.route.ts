@@ -10,8 +10,18 @@ const router = express.Router();
 const clientPages = path.resolve(process.cwd(), "apps/client/public/pages");
 router.use(express.static(clientPages));
 
-// Redirect to admin edit panel
+// Quick auth check endpoint (useful for front-end to validate token without saving)
+router.get("/ping", verifyJWT, (req: Request, res: Response) => {
+  res.json({ ok: true, username: req.user?.username });
+});
+
+// Serve admin edit panel with proper caching headers
 router.get("/", (req: Request, res: Response) => {
+  // Prevent caching to ensure fresh scripts
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
   res.sendFile(path.join(clientPages, "user.admin.html"), (err?: Error) => {
     if (err) {
       console.error("sendFile error:", err);

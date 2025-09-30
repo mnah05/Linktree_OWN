@@ -43,11 +43,16 @@ loginForm.addEventListener("submit", function (e) {
     .then((res) => {
       console.log("Login successful:", res.data);
 
-      if (res.data.token) sessionStorage.setItem("jwt", res.data.token);
+      if (res.data.token) {
+        // Store using the key that user.admin.js expects
+        localStorage.setItem("token", res.data.token);
 
-      // Optional: redirect to dashboard
-      // window.location.href = "/dashboard.html";
-      window.location.href = "http://localhost:5500/admin";
+        // Redirect to admin page - removed unnecessary auth header for GET request
+        window.location.href = "http://localhost:5500/admin";
+      } else {
+        console.error("No token received");
+        window.location.href = "http://localhost:5500/404";
+      }
     })
     .catch((err) => {
       console.error("Login error:", err.response ? err.response.data : err);
@@ -75,12 +80,11 @@ signupForm.addEventListener("submit", function (e) {
     .then((res) => {
       console.log("Signup successful:", res.data);
 
-      if (res.data.token) localStorage.setItem("jwtToken", res.data.token);
+      // Store using the key that user.admin.js expects
+      if (res.data.token) localStorage.setItem("token", res.data.token);
       if (res.data.user)
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      // Optional: redirect after signup
-      // window.location.href = "/dashboard.html"
       window.location.href = "http://localhost:5500/admin";
     })
     .catch((err) => {
@@ -95,9 +99,9 @@ signupForm.addEventListener("submit", function (e) {
 // Optional: interactive focus feedback on inputs
 document.querySelectorAll("input").forEach((input) => {
   input.addEventListener("focus", () =>
-    input.parentElement.classList.add("transform", "scale-105"),
+    input.parentElement.classList.add("transform", "scale-105")
   );
   input.addEventListener("blur", () =>
-    input.parentElement.classList.remove("transform", "scale-105"),
+    input.parentElement.classList.remove("transform", "scale-105")
   );
 });

@@ -23,13 +23,17 @@ export function verifyJWT(
   res: Response,
   next: NextFunction,
 ): void {
-  const authHeader =
-    req.headers["authorization"] || req.headers["authorisation"];
-  const token = Array.isArray(authHeader)
-    ? authHeader[0]?.split(" ")[1]
-    : authHeader?.split(" ")[1];
+  const rawAuth =
+    req.headers["authorization"] || req.headers["authorisation"] || "";
+  // Normalize (could be "Bearer token", "bearer token", token only, or duplicated)
+  let token = Array.isArray(rawAuth) ? rawAuth[0] : rawAuth;
+  token = typeof token === "string" ? token.trim() : "";
 
-  if (!token) {
+  if (token.toLowerCase().startsWith("bearer ")) {
+    token = token.slice(7).trim();
+  }
+  
+  if (!token || token === "null" || token === "undefined") {
     res.status(401).json({ error: "No token provided or invalid format" });
     return;
   }
@@ -43,9 +47,14 @@ export function verifyJWT(
 
   try {
     const payload = jwt.verify(token, jwtSecret) as JwtPayload;
+    if (!payload.username) {
+      res.status(401).json({ error: "Invalid token: missing username" });
+      return;
+    }
     req.user = payload;
     next();
   } catch (err) {
+    console.warn("Token verification failed:", (err as Error).message);
     res.status(403).json({ error: "Invalid or expired token" });
   }
 }
