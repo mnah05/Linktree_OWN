@@ -47,9 +47,12 @@ loginForm.addEventListener("submit", function (e) {
 
       // Optional: redirect to dashboard
       // window.location.href = "/dashboard.html";
+      window.location.href = "http://localhost:5500/admin";
     })
     .catch((err) => {
       console.error("Login error:", err.response ? err.response.data : err);
+
+      window.location.href = "http://localhost:5500/404";
     });
 });
 
@@ -77,12 +80,15 @@ signupForm.addEventListener("submit", function (e) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
       // Optional: redirect after signup
-      // window.location.href = "/dashboard.html";
+      // window.location.href = "/dashboard.html"
+      window.location.href = "http://localhost:5500/admin";
     })
     .catch((err) => {
       console.error("Signup error:", err.response ? err.response.data : err);
       // Optional: show user-friendly messages
       // alert(err.response?.data?.error || "Signup failed");
+
+      window.location.href = "http://localhost:5500/404";
     });
 });
 
