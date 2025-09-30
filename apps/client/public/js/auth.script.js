@@ -43,7 +43,7 @@ loginForm.addEventListener("submit", function (e) {
     .then((res) => {
       console.log("Login successful:", res.data);
 
-      if (res.data.token) sessionStorage.setItem("jwtToken", res.data.token);
+      if (res.data.token) sessionStorage.setItem("jwt", res.data.token);
 
       // Optional: redirect to dashboard
       // window.location.href = "/dashboard.html";
@@ -95,9 +95,9 @@ signupForm.addEventListener("submit", function (e) {
 // Optional: interactive focus feedback on inputs
 document.querySelectorAll("input").forEach((input) => {
   input.addEventListener("focus", () =>
-    input.parentElement.classList.add("transform", "scale-105")
+    input.parentElement.classList.add("transform", "scale-105"),
   );
   input.addEventListener("blur", () =>
-    input.parentElement.classList.remove("transform", "scale-105")
+    input.parentElement.classList.remove("transform", "scale-105"),
   );
 });
