@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
           atob(base64)
             .split("")
             .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-            .join(""),
-        ),
+            .join("")
+        )
       );
     } catch {
       return null;
@@ -45,6 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) {
       el.textContent = msg;
       el.classList.remove("hidden");
+      // Remove any legacy utility classes that might conflict
+      el.classList.remove(
+        "text-green-400",
+        "text-red-400",
+        "bg-green-900/30",
+        "bg-red-900/30"
+      );
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
@@ -119,18 +126,18 @@ document.addEventListener("DOMContentLoaded", () => {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
-          },
+          }
         );
         showMessage(
           successMessage,
-          response.data.message || "Profile saved successfully!",
+          response.data.message || "Profile saved successfully!"
         );
       } catch (error) {
         if (error.response?.status === 401 || error.response?.status === 403)
           return redirectToAuth();
         showMessage(
           errorMessage,
-          error.response?.data?.error || "Failed to save profile",
+          error.response?.data?.error || "Failed to save profile"
         );
       }
     });
@@ -145,12 +152,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (typeof axios === "undefined") {
     alert(
-      "Required libraries not loaded. Please refresh the page or contact support.",
+      "Required libraries not loaded. Please refresh the page or contact support."
     );
     return;
   }
 
   init().catch(() =>
-    showMessage(errorMessage, "Failed to initialize admin page"),
+    showMessage(errorMessage, "Failed to initialize admin page")
   );
 });

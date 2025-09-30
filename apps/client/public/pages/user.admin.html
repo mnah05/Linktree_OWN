@@ -12,83 +12,43 @@
       rel="stylesheet"
     />
     <style>
-      body {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
-        background-color: #0d1117;
-        min-height: 100vh;
+      :root{
+        --color-bg:#0f1115;--color-surface:#1c1f26;--color-surface-alt:#181c22;
+        --color-border:#232a33;--color-text:#f1f5f9;--color-text-dim:#94a3b8;
+        --color-accent:#3ecf8e;--color-accent-hover:#32b176;
+        --color-danger:#ef4444;--color-danger-bg:#3b1115;
+        --color-success:#10b981;--color-success-bg:#0f2f23;
+        --focus:0 0 0 2px #0f1115,0 0 0 4px #3ecf8e;
+        --radius:16px;--transition:150ms cubic-bezier(.4,0,.2,1);
       }
-
-      .input-field {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        color: #c9d1d9;
-        transition: all 0.2s ease;
-      }
-
-      .input-field:focus {
-        outline: none;
-        border-color: #58a6ff;
-        box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
-      }
-
-      .btn-primary {
-        background-color: #238636;
-        color: white;
-        transition: all 0.2s ease;
-      }
-
-      .btn-primary:hover {
-        background-color: #2ea043;
-      }
-
-      .btn-secondary {
-        background-color: #21262d;
-        border: 1px solid #30363d;
-        color: #c9d1d9;
-        transition: all 0.2s ease;
-      }
-
-      .btn-secondary:hover {
-        background-color: #30363d;
-      }
-
-      .fade-in {
-        animation: fadeIn 0.4s ease-out;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+      body{background:var(--color-bg);color:var(--color-text);font-family:"Inter",system-ui,sans-serif;}
+      form{background:var(--color-surface);border:1px solid var(--color-border);padding:2.1rem;border-radius:var(--radius);box-shadow:0 4px 14px -2px rgba(0,0,0,.55);}
+      label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--color-text-dim);}
+      input,textarea{background:var(--color-surface-alt);border:1px solid var(--color-border);border-radius:10px;padding:.8rem 1rem;font-size:.85rem;width:100%;color:var(--color-text);transition:var(--transition);}
+      input::placeholder,textarea::placeholder{color:#5f6b78;}
+      input:focus,textarea:focus{outline:none;box-shadow:var(--focus);border-color:var(--color-accent);}
+      .group-box{background:var(--color-surface-alt);border:1px solid var(--color-border);padding:1rem 1rem 1.25rem;border-radius:14px;}
+      .btn-primary{background:var(--color-accent);color:#0e1713;padding:.9rem 1rem;border-radius:12px;font-weight:600;transition:var(--transition);}
+      .btn-primary:hover{background:var(--color-accent-hover);}
+      .btn-secondary{background:var(--color-surface-alt);border:1px solid var(--color-border);padding:.9rem 1rem;border-radius:12px;font-weight:600;transition:var(--transition);color:var(--color-text);}
+      .btn-secondary:hover{background:#1e232a;border-color:var(--color-accent);}
+      #successMessage{background:var(--color-success-bg);border:1px solid var(--color-success);color:var(--color-success);border-radius:10px;}
+      #errorMessage{background:var(--color-danger-bg);border:1px solid var(--color-danger);color:var(--color-danger);border-radius:10px;}
     </style>
   </head>
-  <body class="p-6">
+  <body class="p-8">
     <div class="max-w-2xl mx-auto">
       <!-- Header -->
-      <div class="mb-8 fade-in">
-        <h1 class="text-3xl font-bold text-gray-100 mb-2">Profile Manager</h1>
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">Profile Manager</h1>
         <p class="text-gray-400">Create and manage your profile page</p>
       </div>
 
       <!-- Form -->
-      <form id="profileForm" class="space-y-6 fade-in">
+      <form id="profileForm" class="space-y-6">
         <!-- Username -->
         <div>
-          <label
-            for="username"
-            class="block text-sm font-medium text-gray-300 mb-2"
-          >
+          <label for="username" class="block mb-2">
             Username <span class="text-red-500">*</span>
           </label>
           <input
@@ -97,89 +57,78 @@
             name="username"
             required
             placeholder="johndoe"
-            class="input-field w-full px-4 py-2 rounded-md"
           />
         </div>
 
         <!-- Bio -->
         <div>
-          <label for="bio" class="block text-sm font-medium text-gray-300 mb-2">
-            Bio
-          </label>
+          <label for="bio" class="block mb-2">Bio</label>
           <textarea
             id="bio"
             name="bio"
             rows="3"
             placeholder="Tell us about yourself..."
-            class="input-field w-full px-4 py-2 rounded-md resize-none"
+            style="resize:none;"
           ></textarea>
         </div>
 
         <!-- Links Section -->
         <div>
-          <h3 class="text-lg font-semibold text-gray-100 mb-4">
-            Links (Max 3)
-          </h3>
+          <h3 class="text-lg font-semibold mb-4">Links (Max 3)</h3>
 
           <!-- Link 1 -->
-          <div class="mb-4 p-4 bg-[#161b22] border border-[#30363d] rounded-lg">
-            <h4 class="text-sm font-medium text-gray-300 mb-3">Link 1</h4>
+          <div class="group-box mb-4">
+            <h4 class="text-sm font-medium mb-3" style="color:var(--color-text-dim)">Link 1</h4>
             <div class="space-y-3">
               <input
                 type="text"
                 id="link1_text"
                 name="link1_text"
                 placeholder="Link Title (e.g., My Website)"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
               <input
                 type="url"
                 id="link1_url"
                 name="link1_url"
                 placeholder="https://example.com"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
             </div>
           </div>
 
           <!-- Link 2 -->
-          <div class="mb-4 p-4 bg-[#161b22] border border-[#30363d] rounded-lg">
-            <h4 class="text-sm font-medium text-gray-300 mb-3">Link 2</h4>
+          <div class="group-box mb-4">
+            <h4 class="text-sm font-medium mb-3" style="color:var(--color-text-dim)">Link 2</h4>
             <div class="space-y-3">
               <input
                 type="text"
                 id="link2_text"
                 name="link2_text"
                 placeholder="Link Title (e.g., GitHub)"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
               <input
                 type="url"
                 id="link2_url"
                 name="link2_url"
                 placeholder="https://github.com/username"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
             </div>
           </div>
 
           <!-- Link 3 -->
-          <div class="mb-4 p-4 bg-[#161b22] border border-[#30363d] rounded-lg">
-            <h4 class="text-sm font-medium text-gray-300 mb-3">Link 3</h4>
+          <div class="group-box mb-4">
+            <h4 class="text-sm font-medium mb-3" style="color:var(--color-text-dim)">Link 3</h4>
             <div class="space-y-3">
               <input
                 type="text"
                 id="link3_text"
                 name="link3_text"
                 placeholder="Link Title (e.g., Twitter)"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
               <input
                 type="url"
                 id="link3_url"
                 name="link3_url"
                 placeholder="https://twitter.com/username"
-                class="input-field w-full px-3 py-2 rounded-md text-sm"
               />
             </div>
           </div>
@@ -187,35 +136,22 @@
 
         <!-- Buttons -->
         <div class="flex gap-3 pt-4">
-          <button
-            type="submit"
-            class="btn-primary flex-1 px-6 py-3 rounded-md font-semibold"
-          >
+          <button type="submit" class="btn-primary flex-1">
             Save Profile
           </button>
-          <button
-            type="button"
-            id="previewBtn"
-            class="btn-secondary px-6 py-3 rounded-md font-semibold"
-          >
+          <button type="button" id="previewBtn" class="btn-secondary" style="min-width:120px;">
             Preview
           </button>
         </div>
       </form>
 
       <!-- Success Message -->
-      <div
-        id="successMessage"
-        class="hidden mt-4 p-4 bg-green-900/30 border border-green-700 rounded-lg text-green-400 text-sm"
-      >
+      <div id="successMessage" class="hidden mt-4 p-4">
         Profile saved successfully!
       </div>
 
       <!-- Error Message -->
-      <div
-        id="errorMessage"
-        class="hidden mt-4 p-4 bg-red-900/30 border border-red-700 rounded-lg text-red-400 text-sm"
-      ></div>
+      <div id="errorMessage" class="hidden mt-4 p-4"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

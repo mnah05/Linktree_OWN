@@ -6,53 +6,106 @@
     <title>LinkHub - Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      :root {
+        --color-bg: #0f1115;
+        --color-surface: #1c1f26;
+        --color-surface-alt: #15181e;
+        --color-border: #232a33;
+        --color-text: #f1f5f9;
+        --color-text-dim: #94a3b8;
+        --color-accent: #3ecf8e;
+        --color-accent-hover: #32b176;
+        --focus: 0 0 0 2px #0f1115, 0 0 0 4px #3ecf8e;
+        --radius: 16px;
+        --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
       body {
-        font-family: "Inter", sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: "Inter", system-ui, sans-serif;
       }
-      .form-container {
-        transition:
-          transform 0.4s ease-in-out,
-          opacity 0.4s ease-in-out;
+
+      .tabs {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        padding: 0.4rem;
+        border-radius: 12px;
+        display: inline-flex;
+        gap: 0.5rem;
       }
+
+      .tab-btn {
+        padding: 0.75rem 1.6rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--color-text-dim);
+        transition: var(--transition);
+        background: transparent;
+      }
+      .tab-btn:hover {
+        color: var(--color-text);
+      }
+      .tab-btn.active {
+        background: var(--color-accent);
+        color: #0e1813;
+      }
+
+      .auth-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.55);
+      }
+
+      input {
+        background: var(--color-surface-alt);
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        font-size: 0.9rem;
+        width: 100%;
+        color: var(--color-text);
+        transition: var(--transition);
+      }
+      input::placeholder {
+        color: #647184;
+      }
+      input:focus {
+        outline: none;
+        box-shadow: var(--focus);
+        border-color: var(--color-accent);
+      }
+
+      button[type="submit"] {
+        background: var(--color-accent);
+        color: #0f1612;
+        width: 100%;
+        padding: 0.95rem 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: var(--transition);
+      }
+      button[type="submit"]:hover {
+        background: var(--color-accent-hover);
+      }
+
       .form-hidden {
-        transform: translateX(-30px);
-        opacity: 0;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        display: none;
       }
       .form-visible {
-        transform: translateX(0);
-        opacity: 1;
-        pointer-events: all;
-        position: relative;
+        display: block;
       }
-      .tab-button {
-        transition: all 0.3s ease;
-      }
-      .tab-active {
-        background: white;
-        color: #111827;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      }
-      .tab-inactive {
-        background: #374151;
-        color: #9ca3af;
-      }
-      .tab-inactive:hover {
-        color: white;
-        background: #4b5563;
-      }
-      .forms-container {
-        position: relative;
-        min-height: 500px;
+
+      footer {
+        color: var(--color-text-dim);
       }
     </style>
   </head>
-  <body class="bg-gray-900 text-white min-h-screen flex flex-col">
+  <body class="flex flex-col min-h-screen">
     <!-- Header -->
     <header class="p-6">
       <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -66,37 +119,25 @@
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="flex-1 flex items-center justify-center px-6 py-8">
       <div class="max-w-md w-full space-y-8">
         <!-- Form Toggle -->
         <div class="text-center">
-          <div
-            class="bg-gray-900 rounded-xl p-2 inline-flex border border-gray-700 shadow-2xl space-x-4"
-          >
-            <button
-              id="loginTab"
-              class="relative px-8 py-3 rounded-lg text-base font-semibold transition-all duration-300 bg-white text-gray-900 shadow-lg transform hover:scale-105"
-            >
-              <span class="relative z-10">Sign In</span>
-            </button>
-            <button
-              id="signupTab"
-              class="bg-gray-800 relative px-8 py-3 rounded-lg text-base font-semibold transition-all duration-300 text-gray-300 hover:text-white hover:bg-gray-700 transform hover:scale-105"
-            >
-              <span class="relative z-10">Sign Up</span>
-            </button>
+          <div class="tabs">
+            <button id="loginTab" class="tab-btn active">Sign In</button>
+            <button id="signupTab" class="tab-btn">Sign Up</button>
           </div>
-          <p class="text-gray-500 text-sm mt-3">
+          <p class="text-sm mt-4 text-gray-400">
             Choose how you'd like to continue
           </p>
         </div>
 
-        <!-- Forms Container -->
+        <!-- Forms -->
         <div class="forms-container">
           <!-- Login Form -->
           <div id="loginForm" class="form-container form-visible">
-            <div class="bg-gray-800 rounded-2xl p-8 space-y-6">
+            <div class="auth-card space-y-6">
               <div class="text-center space-y-2">
                 <h2 class="text-2xl font-bold">Welcome back</h2>
                 <p class="text-gray-400">Sign in to your LinkHub account</p>
@@ -115,7 +156,6 @@
                     id="loginEmail"
                     name="email"
                     required
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -132,7 +172,6 @@
                     id="loginPassword"
                     name="password"
                     required
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -142,25 +181,20 @@
                     <input
                       type="checkbox"
                       id="rememberMe"
-                      class="h-4 w-4 text-cyan-400 bg-gray-700 border-gray-600 rounded focus:ring-cyan-400 focus:ring-2"
+                      class="h-4 w-4 text-cyan-400 bg-gray-700 border-gray-600 rounded"
                     />
                     <span class="ml-2 text-gray-300">Remember me</span>
                   </label>
                 </div>
 
-                <button
-                  type="submit"
-                  class="w-full bg-white text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Sign In
-                </button>
+                <button type="submit">Sign In</button>
               </form>
             </div>
           </div>
 
           <!-- Signup Form -->
           <div id="signupForm" class="form-container form-hidden">
-            <div class="bg-gray-800 rounded-2xl p-8 space-y-6">
+            <div class="auth-card space-y-6">
               <div class="text-center space-y-2">
                 <h2 class="text-2xl font-bold">Create account</h2>
                 <p class="text-gray-400">Join LinkHub and share your links</p>
@@ -179,7 +213,6 @@
                     id="signupName"
                     name="name"
                     required
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -196,7 +229,6 @@
                     id="signupUsername"
                     name="username"
                     required
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Choose a username"
                   />
                 </div>
@@ -213,7 +245,6 @@
                     id="signupEmail"
                     name="email"
                     required
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -231,7 +262,6 @@
                     name="password"
                     required
                     minlength="6"
-                    class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all duration-200 text-white placeholder-gray-400"
                     placeholder="Create a password (min. 6 characters)"
                   />
                 </div>
@@ -242,7 +272,7 @@
                       type="checkbox"
                       id="agreeTerms"
                       required
-                      class="h-4 w-4 text-cyan-400 bg-gray-700 border-gray-600 rounded focus:ring-cyan-400 focus:ring-2 mt-0.5 flex-shrink-0"
+                      class="h-4 w-4 text-cyan-400 bg-gray-700 border-gray-600 rounded mt-0.5 flex-shrink-0"
                     />
                     <span class="ml-2 text-gray-300">
                       I agree to the
@@ -257,12 +287,7 @@
                   </label>
                 </div>
 
-                <button
-                  type="submit"
-                  class="w-full bg-white text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Create Account
-                </button>
+                <button type="submit">Create Account</button>
               </form>
             </div>
           </div>

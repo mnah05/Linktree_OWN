@@ -6,58 +6,110 @@
     <title>LinkHub - One Link for Everything</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      :root {
+        --color-bg: #0f1115;
+        --color-bg-alt: #15181e;
+        --color-surface: #1c1f26;
+        --color-surface-alt: #242a32;
+        --color-border: #2a2f3a;
+        --color-text: #f1f5f9;
+        --color-text-dim: #94a3b8;
+        --color-accent: #3ecf8e;
+        --color-accent-hover: #32b176;
+        --radius: 14px;
+        --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        --shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.55);
+      }
+
       body {
-        font-family: "Inter", sans-serif;
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .btn-primary {
+        background: var(--color-accent);
+        color: #0b1410;
+        padding: 1rem 1.25rem;
+        font-weight: 600;
+        border-radius: var(--radius);
+        width: 100%;
+        transition: var(--transition);
+      }
+      .btn-primary:hover {
+        background: var(--color-accent-hover);
+      }
+
+      .mini-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        padding: 1.25rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .link-pill {
+        background: var(--color-surface-alt);
+        border: 1px solid var(--color-border);
+        padding: 0.7rem 1rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-align: center;
+        transition: var(--transition);
+      }
+      .link-pill:hover {
+        border-color: var(--color-accent);
+        background: var(--color-bg-alt);
+        color: var(--color-text);
+      }
+
+      footer {
+        color: var(--color-text-dim);
+      }
+
+      h2 span {
+        color: var(--color-accent);
       }
     </style>
   </head>
-  <body class="bg-gray-900 text-white min-h-screen">
+  <body class="min-h-screen flex flex-col">
     <!-- Header -->
     <header class="p-6">
       <div class="max-w-6xl mx-auto flex justify-between items-center">
         <h1 class="text-xl font-semibold">LinkHub</h1>
-        <!-- <a href="#" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-                Get Your Own
-            </a> -->
+        <!-- Optional CTA -->
+        <!-- <a href="#" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">Get Your Own</a> -->
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="flex-1 flex items-center justify-center px-6 py-20">
       <div class="max-w-2xl text-center space-y-8">
-        <h2 class="text-5xl md:text-6xl font-bold">
-          One link for<br />
-          <span class="text-gray-400">everything</span>
+        <h2 class="text-5xl md:text-6xl font-bold leading-tight">
+          One link for <br />
+          <span class="opacity-80">everything</span>
         </h2>
 
-        <p class="text-xl text-gray-300 max-w-lg mx-auto">
+        <p class="text-lg text-gray-300 max-w-lg mx-auto">
           Share all your links in one place. Perfect for Instagram, TikTok, and
           social media bios.
         </p>
 
         <div class="space-y-4">
-          <a
-            href="http://localhost:5500/auth/"
-            target="_self"
-            rel="noopener noreferrer"
-          >
-            <button
-              class="w-full max-w-sm bg-white text-gray-900 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
-            >
-              Create Your Page
-            </button>
+          <a href="http://localhost:5500/auth/" target="_self">
+            <button class="btn-primary">Create Your Page</button>
           </a>
           <p class="text-sm text-gray-500">Free forever • One for all</p>
         </div>
       </div>
     </main>
 
-    <!-- Simple Example -->
-    <section class="pb-20 px-6">
+    <!-- Example Card -->
+    <section class="pb-24 px-6">
       <div class="max-w-xs mx-auto">
-        <div class="bg-gray-800 rounded-2xl p-6 space-y-4">
-          <!-- Profile -->
+        <div class="mini-card space-y-5">
           <div class="text-center space-y-2">
             <img
               src="https://i.pinimg.com/736x/90/12/76/90127618e0e0db6101c6cbc03d30b5f2.jpg"
@@ -66,36 +118,18 @@
             />
             <h3 class="font-medium">@username</h3>
           </div>
-
-          <!-- Links -->
-          <div class="space-y-5">
-            <div
-              class="bg-gray-700 rounded-lg py-3 px-4 text-center text-sm outline-none transition-all duration-300 hover:-translate-y-1.5 hover:bg-gray-900 hover:outline hover:outline-[2px] hover:outline-gray-200"
-            >
-              My Website
-            </div>
-            <div
-              class="bg-gray-700 rounded-lg py-3 px-4 text-center text-sm outline-none transition-all duration-300 hover:-translate-y-1.5 hover:bg-gray-900 hover:outline hover:outline-[2px] hover:outline-gray-200"
-            >
-              Latest Video
-            </div>
-            <div
-              class="bg-gray-700 rounded-lg py-3 px-4 text-center text-sm outline-none transition-all duration-300 hover:-translate-y-1.5 hover:bg-gray-900 hover:outline hover:outline-[2px] hover:outline-gray-200"
-            >
-              Shop
-            </div>
-            <div
-              class="bg-gray-700 rounded-lg py-3 px-4 text-center text-sm outline-none transition-all duration-300 hover:-translate-y-1.5 hover:bg-gray-900 hover:outline hover:outline-[2px] hover:outline-gray-200"
-            >
-              Contact
-            </div>
+          <div class="space-y-3">
+            <div class="link-pill">My Website</div>
+            <div class="link-pill">Latest Video</div>
+            <div class="link-pill">Shop</div>
+            <div class="link-pill">Contact</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="text-center pb-8 text-gray-500 text-sm">
+    <footer class="text-center pb-8 text-sm">
       <p>&copy; 2025 LinkHub. Simple link sharing.</p>
     </footer>
   </body>
